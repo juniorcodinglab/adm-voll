@@ -42,7 +42,7 @@ function Tabela({consultas}: {consultas: IConsulta[] | null }) {
                     <TableBody>
                         {consultas?.map((linha) => {
                             return (
-                                <SLinha>
+                                <SLinha key={linha.paciente}>
                                     <SCelula component="th" scope="row">
                                         {new Date(linha.data).toLocaleString()}
                                     </SCelula>
