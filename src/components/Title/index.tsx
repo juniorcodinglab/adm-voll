@@ -2,6 +2,7 @@ import avaliacao from '../../assets/avaliacao.png';
 import grafico from '../..//assets/grafico.png';
 import consulta from '../../assets/consulta.png';
 import styled from 'styled-components';
+import Botao from '../Botao';
 
 interface Props {
     imagem?: string|undefined,
@@ -28,7 +29,7 @@ const SSpan = styled.span<ISpan>`
 `
 
 const STitle = styled.h2`
-    color: val(--azul-claro);
+    color: var(--azul-claro);
 `
 
 const SContainer = styled.div`
@@ -45,12 +46,15 @@ function Title ({imagem, children}: Props) {
     }
 
     return (
-        <SContainer>
-            {imagem && 
-                <SSpan image={listImgs[imagem as keyof IImages] ?? ""} />
-            }
-            <STitle>{children}</STitle>
-        </SContainer>
+        <>
+            <SContainer>
+                {imagem && 
+                    <SSpan image={listImgs[imagem as keyof IImages] ?? ""} />
+                }
+                <STitle>{children}</STitle>
+            </SContainer>
+        </>
+        
     )
 
 }

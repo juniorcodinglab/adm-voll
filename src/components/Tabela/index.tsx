@@ -1,6 +1,9 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from "@mui/material";
 import IConsulta from "../../types/IConsulta";
 import styled from "styled-components";
+import Subtitulo from "../Subtitulo";
+import Title from "../Title";
+import Botao from "../Botao";
 
 const SCelula = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -12,7 +15,7 @@ const SCelula = styled(TableCell)(() => ({
 
     [`&.${tableCellClasses.body}`]: {
         fontSize: 16,
-        fontFamily: "var(--fonte-principal)"
+        fontFamily: "var(--fonte-principal)",
     }
 }));
 
@@ -21,13 +24,18 @@ const SLinha = styled(TableRow)(() => ({
         backgroundColor: "var(--cinza-claro)",
         align: "right"
     }
-}))
+}));
+
+const STable = styled(Table)(() => ({
+    backgroundColor: "rgba(255, 255, 255,0.5)"
+}));
 
 function Tabela({consultas}: {consultas: IConsulta[] | null }) {
     return (
         <>
+            <Title imagem="consult">Consultas do dia</Title>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 700 }} aria-label="tabela-customizada">
+                <STable sx={{ minWidth: 700 }} aria-label="tabela-customizada">
                     <TableHead>
                         <TableRow>
                              <SCelula>Data</SCelula>
@@ -56,8 +64,10 @@ function Tabela({consultas}: {consultas: IConsulta[] | null }) {
                         })}
                         
                     </TableBody>
-                </Table>
+                </STable>
             </TableContainer>
+
+            <Botao>Ver mais</Botao>
         </>
     )
 

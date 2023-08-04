@@ -2,6 +2,7 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import IProsissional from "../../types/IProfissional";
 import IConsulta from "../../types/IConsulta";
 import useDadosGrafico from "./useDadosGrafico";
+import Title from "../Title";
 
 interface Props {
     profissionais: IProsissional[] | null,
@@ -21,6 +22,8 @@ function Grafico({profissionais, consultas}: Props) {
 
 
     return (
+    <>
+        <Title imagem="graphic">Consultas mensais por especialista</Title>
         <ResponsiveContainer width="100%" height={350}>
             <BarChart
                 layout="vertical"
@@ -32,6 +35,8 @@ function Grafico({profissionais, consultas}: Props) {
                 <Bar dataKey="consultas" fill="#083860" barSize={30}></Bar>
             </BarChart>
         </ResponsiveContainer>
+    </>
+        
     )
 }
 

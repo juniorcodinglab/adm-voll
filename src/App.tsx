@@ -1,5 +1,6 @@
 import './App.css';
 import Avaliacao from './components/Avaliacao';
+import Botao from './components/Botao';
 import { Container } from './components/Container';
 import { Footer } from './components/Footer';
 import Grafico from './components/Grafico';
@@ -21,6 +22,7 @@ function App() {
       <Header />
         <Container>
           <Title>Área Administrativa</Title>
+          <Botao>Cadastrar especialista</Botao>
           <Tabela consultas={consultas}></Tabela>
           <Grafico consultas={consultas} profissionais={profissionais}></Grafico>
           <Avaliacao profissionais={profissionais} />
