@@ -17,11 +17,15 @@ function Avaliacao({ profissionais }:{profissionais: IProsissional[] | null }) {
         <>
             <Title imagem="avaliation">Avaliações de especialistas</Title>
             <SSecaoCard>
-                {profissionais?.map((profissional) => {
+                {profissionais && profissionais.length ? 
+                    profissionais?.map((profissional) => {
                     return <Card profissional={profissional} />
-                })}
+                }): "Não há avaliações encontradas" }
             </SSecaoCard>
-            <Botao>Ver mais</Botao>
+
+            { profissionais && profissionais.length > 4 ? 
+                <Botao>Ver mais</Botao> :
+                "" }
         </>
         
     )
