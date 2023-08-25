@@ -5,19 +5,26 @@ import { useState } from "react";
  */
 export default function usePost() {
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState(false,);
+    const [success, setSuccess] = useState(false);
+    const [resposta, setResposta] = useState('');
 
     async function cadastrarDados<T>({url, dados}: {url: string, dados: T }) {
         try{
-            await fetch(`http://localhost:8080/${url}`, {
+            const response = await fetch(`http://localhost:8080/${url}`, {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(dados)
             })
             setSuccess(true);
+            const respostaConvertida = await response.json();
+            setResposta(respostaConvertida.token);
+
         } catch(error) {
             setError('Não foi possível enviar os dados')
         }
     }
 
-    return { cadastrarDados, success, error };
+    return { cadastrarDados, success, error, resposta };
 }

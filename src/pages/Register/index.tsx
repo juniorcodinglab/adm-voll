@@ -4,6 +4,9 @@ import { Step, StepLabel, Stepper } from '@mui/material'
 import { useState } from 'react'
 import InputBasic from '../../components/InputBasic'
 import Botao from '../../components/Botao'
+import IClinica from '../../types/IClinicas'
+import usePost from '../../usePost'
+import { useNavigate } from 'react-router-dom'
 
 const Img = styled.img`
     padding: 2em 0;
@@ -57,7 +60,7 @@ const SRotule = styled.label`
 
 
 export default function Register() {
-    const [etapaAtiva, setEtapaAtiva] = useState(1);
+    const [etapaAtiva, setEtapaAtiva] = useState(0);
     const [nome, setNome] = useState('');
     const [cnpj, setCnpj] = useState('');
     const [email, setEmail] = useState('');
@@ -69,12 +72,39 @@ export default function Register() {
     const [endereco, setEndereco] = useState('');
     const [numero, setNumero] = useState('');
     const [complemento, setComplemento] = useState('');
+    const [estado, setEstado] = useState('');
+    const { cadastrarDados, error, success} = usePost();
 
+    const navigate = useNavigate();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // previne o envio padrão do formulário
 
-        setEtapaAtiva(etapaAtiva + 1); // atualiza o estado da etapa para a próxima etapa
+       // setEtapaAtiva(etapaAtiva + 1); // atualiza o estado da etapa para a próxima etapa
+
+        const clinica: IClinica = {
+            email: email,
+            nome: nome,
+            senha: password,
+            endereco: {
+                cep: cep,
+                rua: endereco,
+                numero: numero,
+                complemento: complemento,
+                estado: estado
+            }
+        }
+
+        if(etapaAtiva == 1) {
+            try{ 
+                cadastrarDados({url: 'clinica', dados: clinica});
+                navigate('/login'); // Redireciona para Login 
+            } catch (errorP) {
+                errorP && alert('Erro ao cadastrar os dados')
+            }
+        }
+
+        setEtapaAtiva(etapaAtiva + 1);
     }
 
     return (
@@ -115,24 +145,24 @@ export default function Register() {
                         onChange={setEmail}
                         placeholder="Insira o endereço de e-mail para login"/>
                     <InputBasic 
-                        type='text' 
+                        type='password' 
                         label='Senha'
                         value={password}
                         onChange={setPassword}
                         placeholder="Digite sua senha"/>
                     <InputBasic 
-                        type='text' 
+                        type='password' 
                         label='Repita a senha'
                         value={confirmPassword}
                         onChange={setConfirmPassword}
                         placeholder="Repita a senha anterior"/>
                 </>) : (<>
                     <InputBasic 
-                        type='tel' 
+                        type='text' 
                         label='Telefone'
                         value={telefone}
-                        onChange={setNome}
-                        placeholder="Digite o nome da clínica"/>
+                        onChange={setTelefone}
+                        placeholder="Digite o telefone"/>
 
                     <SRotule>Endereço</SRotule>
 
@@ -163,6 +193,12 @@ export default function Register() {
                             placeholder="Complemento"/>
 
                     </Container>
+
+                    <InputBasic 
+                            type='text' 
+                            value={estado}
+                            onChange={setEstado}
+                            placeholder="Estado"/>
                 </>) }
 
                 <SButton type="submit">
